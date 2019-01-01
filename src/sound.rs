@@ -17,3 +17,5 @@ pub fn switch_audio(flag: &ArgMatches) {
             .expect("failed to switch to speakers");
     }
 }
+
+//TODO: remove hardcoded speaker args and allow user to define their own profiles
