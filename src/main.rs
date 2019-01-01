@@ -2,6 +2,7 @@ use clap::{Arg, App, SubCommand};
 use std::{thread, time};
 use indicatif::{ProgressBar, ProgressStyle};
 use ah_real_tools::monitor;
+use ah_real_tools::sound;
 
 static PBAR_FMT: &'static str = "{msg} {spinner:.green} {percent}% [{wide_bar:.cyan/blue}] {bytes}/{total_bytes} eta: {eta}";
 
@@ -29,9 +30,14 @@ fn main() {
                 .help("switch to console mode")))
         .subcommand(SubCommand::with_name("sound")
             .about("switch sound modes")
-            .arg(Arg::with_name("sound")
-                .short("-s")
-                .help("switch sound modes")))
+            .arg(Arg::with_name("headphones")
+                .short("h")
+                .long("headphones")
+                .help("switch to headphones"))
+            .arg(Arg::with_name("speakers")
+                .short("s")
+                .long("speakers")
+                .help("switch to speakers")))
         .get_matches();
 
     
@@ -39,6 +45,8 @@ fn main() {
         ("progress", Some(_)) => {indicate_progress()},
         ("display", Some(sub_com)) => {
             monitor::switch_display(&sub_com)},
+        ("sound", Some(sub_com)) => {
+            sound::switch_audio(&sub_com)},
         _ => {println!("No command given")}
     };
 
