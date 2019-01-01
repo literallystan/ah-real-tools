@@ -1,0 +1,10 @@
+[package]
+name = "ah_real_tools"
+version = "0.1.0"
+authors = ["literallystan"]
+edition = "2018"
+
+[dependencies]
+clap = "2.26.0"
+console = "0.5.0"
+indicatif = "0.7.0"
