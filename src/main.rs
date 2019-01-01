@@ -47,7 +47,7 @@ fn main() {
             monitor::switch_display(&sub_com)},
         ("sound", Some(sub_com)) => {
             sound::switch_audio(&sub_com)},
-        _ => {println!("No command given")}
+        _ => {println!("Invalid command given")}
     };
 
 }

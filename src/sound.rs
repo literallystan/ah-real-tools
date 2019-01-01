@@ -9,10 +9,11 @@ pub fn switch_audio(flag: &ArgMatches) {
             .output()
             .expect("failed to switch to headphones");
 
-    } else if flag.is_present("speaker") {
+    } else if flag.is_present("speakers") {
         Command::new("pacmd")
             .arg("set-default-sink")
             .arg("alsa_output.pci-0000_01_00.1.hdmi-stereo")
+            
             .output()
             .expect("failed to switch to speakers");
     }
