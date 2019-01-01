@@ -1,8 +1,7 @@
-extern crate clap;
-
 use clap::{Arg, App, SubCommand};
 use std::{thread, time};
 use indicatif::{ProgressBar, ProgressStyle};
+use ah_real_tools::monitor;
 
 static PBAR_FMT: &'static str = "{msg} {spinner:.green} {percent}% [{wide_bar:.cyan/blue}] {bytes}/{total_bytes} eta: {eta}";
 
@@ -10,19 +9,36 @@ fn main() {
     let matches = App::new("ahtools")
         .version("0.1.0") //abstract to cargo.toml
         .author("Adam Hawkins <literallystan@gmail.com>")
-        .about("dumb progress bar")
-        .arg(Arg::with_name("task")
-            .short("t")
-            .long("task")
-            .help("this does nothing"))
+        .about("common commands simplified")
         .subcommand(SubCommand::with_name("progress")
+            .about("display a dumb progress bar")
             .arg(Arg::with_name("prog")
                 .short("p")
                 .help("do progress")))
+        .subcommand(SubCommand::with_name("display")
+            .about("switch display modes")
+            .arg(Arg::with_name("desktop")
+                .short("d")
+                .long("desktop")
+                .conflicts_with("console")
+                .help("switch to PC mode"))
+            .arg(Arg::with_name("console")
+                .short("c")
+                .long("console")
+                .conflicts_with("desktop")
+                .help("switch to console mode")))
+        .subcommand(SubCommand::with_name("sound")
+            .about("switch sound modes")
+            .arg(Arg::with_name("sound")
+                .short("-s")
+                .help("switch sound modes")))
         .get_matches();
+
     
     match matches.subcommand() {
         ("progress", Some(_)) => {indicate_progress()},
+        ("display", Some(sub_com)) => {
+            monitor::switch_display(&sub_com)},
         _ => {println!("No command given")}
     };
 
